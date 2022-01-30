@@ -15,20 +15,19 @@ def extractText(fileName):
     text = pytesseract.image_to_string(img)
     splitText = text.splitlines()
     mobile = []
+    email = []
     print(splitText)
     for line in splitText:
         words = line.split(' ')
         words = list(map(lambda x: x.lower(), words))
-        # print(words)
-        # checkName(words)
-        # checkEmail(words)
-        # print(line)
         for word in words:
             if word not in ['', ' ']:
-                # mobile += [checkMobileNumber(word)
-                #            ] if checkMobileNumber(word) is not None else []
-                print(checkEmail(word))
-    print(mobile)
+                mobile += [checkMobileNumber(word)
+                           ] if checkMobileNumber(word) is not None else []
+                email += [checkEmail(word)
+                          ] if checkEmail(word) is not None else []
+    print('mobile - ', mobile)
+    print('email - ', email)
     pass
 
 
@@ -41,15 +40,14 @@ def checkName(words):
         if ele in male_names or ele in female_names:
             print('Found Name - ', ele)
 
+# Fetch Email from word
+
 
 def checkEmail(word):
-    print(word)
-    re.search()
-    pass
-    # print('-->')
-    # for ele in words:
-    #     re.search(
-    #         '/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/', ele)
+    if(re.search('[a-zA-Z0-9.]+@[a-zA-Z0-9.]+', word)):
+        return word
+
+# Fetch Mobile from word
 
 
 def checkMobileNumber(word):
