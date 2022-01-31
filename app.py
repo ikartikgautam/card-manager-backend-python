@@ -9,13 +9,16 @@ app = Flask(__name__)
 
 # -------------------------
 
+
 @app.route('/testGet', methods=['GET'])
 def getGet():
     return 'Get request is working count='+request.args['count']
 
+
 @app.route('/testPost', methods=['POST'])
 def getPost():
     return 'Post request is working count='+request.form['count']
+
 
 @app.route('/uploadImage', methods=['POST'])
 def uploadImage():
@@ -26,6 +29,7 @@ def uploadImage():
     return fileName
 
 # -------------------------
+
 
 if __name__ == "__main__":
     app.run(debug=True)

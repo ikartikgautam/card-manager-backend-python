@@ -2,6 +2,9 @@ from PIL import Image
 from pytesseract import pytesseract
 import pandas as pd
 import re
+import cv2
+import matplotlib.pyplot as plt
+import numpy as np
 
 # ------------- Global Functions ------------
 path_to_tesserect = r'/usr/local/Cellar/tesseract/4.1.1/bin/tesseract'  # Tesserect Path
@@ -21,14 +24,31 @@ def extractText(fileName):
         words = line.split(' ')
         words = list(map(lambda x: x.lower(), words))
         for word in words:
-            if word not in ['', ' ']:
-                mobile += [checkMobileNumber(word)
-                           ] if checkMobileNumber(word) is not None else []
-                email += [checkEmail(word)
-                          ] if checkEmail(word) is not None else []
+            pass
+            # if word not in ['', ' ']:
+            #     mobile += [checkMobileNumber(word)
+            #                ] if checkMobileNumber(word) is not None else []
+            #     email += [checkEmail(word)
+            #               ] if checkEmail(word) is not None else []
+    extractCompany(image_path)
+
     print('mobile - ', mobile)
     print('email - ', email)
     pass
+
+
+def extractCompany(filePath):
+    im = cv2.imread(filePath)
+    kernel = np.ones((10, 10), np.float32)/25
+    dst = cv2.filter2D(im, -1, kernel)
+    # plt.imshow(dst)
+    plt.imsave('files/test.png', dst)
+
+    img = Image.open('files/test.png')
+    pytesseract.tesseract_cmd = path_to_tesserect
+
+    text = pytesseract.image_to_string(img)
+    print(text)
 
 
 def checkName(words):
