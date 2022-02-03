@@ -25,29 +25,30 @@ def extractText(fileName):
         words = list(map(lambda x: x.lower(), words))
         for word in words:
             pass
-            # if word not in ['', ' ']:
-            #     mobile += [checkMobileNumber(word)
-            #                ] if checkMobileNumber(word) is not None else []
-            #     email += [checkEmail(word)
-            #               ] if checkEmail(word) is not None else []
-    extractCompany(image_path)
+            if word not in ['', ' ']:
+                mobile += [checkMobileNumber(word)
+                           ] if checkMobileNumber(word) is not None else []
+                email += [checkEmail(word)
+                          ] if checkEmail(word) is not None else []
+    # extractCompany(image_path)
 
     print('mobile - ', mobile)
     print('email - ', email)
-    pass
+    obj = {'mobile': mobile, 'email': email, 'raw': splitText}
+    return obj
 
 
 def extractCompany(filePath):
-    im = cv2.imread(filePath)
-    kernel = np.ones((10, 10), np.float32)/25
-    dst = cv2.filter2D(im, -1, kernel)
-    # plt.imshow(dst)
-    plt.imsave('files/test.png', dst)
+    # im = cv2.imread(filePath)
+    # kernel = np.ones((10, 10), np.float32)/25
+    # dst = cv2.filter2D(im, -1, kernel)
+    # # plt.imshow(dst)
+    # plt.imsave('files/test.png', dst)
 
-    img = Image.open('files/test.png')
-    pytesseract.tesseract_cmd = path_to_tesserect
+    # img = Image.open('files/test.png')
+    # pytesseract.tesseract_cmd = path_to_tesserect
 
-    text = pytesseract.image_to_string(img)
+    text = pytesseract.image_to_string(filePath)
     print(text)
 
 

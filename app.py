@@ -2,8 +2,8 @@ from flask import Flask, render_template, url_for, request
 from werkzeug.utils import secure_filename
 from PIL import Image
 from pytesseract import pytesseract
-import re
 import reader as rd
+import os
 
 app = Flask(__name__)
 
@@ -25,8 +25,9 @@ def uploadImage():
     file = request.files['file']
     fileName = secure_filename(file.filename)
     file.save(f'./files/{fileName}')
-    rd.extractText(fileName)
-    return fileName
+    obj = rd.extractText(fileName)
+    os.remove(f'./files/{fileName}')
+    return obj
 
 # -------------------------
 
