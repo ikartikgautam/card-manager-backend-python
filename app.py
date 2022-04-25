@@ -28,10 +28,15 @@ def getPost():
 def uploadImage():
     file = request.files['file']
     fileName = secure_filename(file.filename)
-    file.save(f'./files/{fileName}')
-    obj = rd.extractText(fileName)
+    file.save(f'./files/orignal/{fileName}')
+    obj1 = rd.extractText(fileName, 'None')
+    obj2 = rd.extractText(fileName, 'Mixed_Not')
+    obj3 = rd.extractText(fileName, 'Mixed')
+    obj4 = rd.extractText(fileName, 'Greyscale')
     os.remove(f'./files/{fileName}')
-    return {'success': True, 'meta': obj, 'msg': 'Card Scanned Successfully'}
+    os.remove(f'./files/orignal/{fileName}')
+    return {'success': True, 'meta': [obj1, obj2, obj3, obj4], 'msg': 'Card Scanned Successfully'}
+    # return {'success': True, 'meta': [obj3], 'msg': 'Card Scanned Successfully'}
 # -------------------------
 
 
